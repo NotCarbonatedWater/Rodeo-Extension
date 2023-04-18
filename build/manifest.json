@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "Rodeo Reply Extension",
+    "description": "Rodeo Reply Extension Project",
+    "version": "0.1.1",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Open the popup"
+    },
+    "icons": {
+        "16": "bull.png",
+        "48": "bull.png",
+        "128": "bull.png"
+    },
+    "permissions": [
+        "contextMenus",
+        "background",
+        "tabs",
+        "scripting",
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://*/"
+    ], 
+    "background": {
+        "service_worker": "eventPage.js"
+    }
+}
