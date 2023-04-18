@@ -1,11 +1,21 @@
 /*global chrome*/
+
+/**
+ * Version: 0.1.2
+ * 
+ * This version serves as a rough demo and plan for this project 
+ * 
+ * Working in this demo: 
+ *   Creating a follow-up message by selecting text (optional, if not, will create 
+ *   a basic follow-up reply), selecting the rodeo icon on extension bar, clicking 
+ *   submit will send message through follow-up function, then show message after 
+ *   processing, allowing user to copying to clipboard with the "copy button"
+ */
+
 import React, { useEffect, useState } from "react";
 import "./App.css";
-
 import { Box, Button, Container, Grid, Paper, TextField } from "@mui/material";
-
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-
 import { Configuration, OpenAIApi } from "openai";
 
 function App() {
@@ -16,11 +26,9 @@ function App() {
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
-
-
   const openai = new OpenAIApi(configuration);
 
-
+  // prompt handler 
   useEffect(() => {
     try {
       chrome.storage.local.get(null, function (data) {
@@ -33,11 +41,9 @@ function App() {
     }
   }, []);
 
+  // OpenAI creater/handler 
   async function handleSubmit() {
-
-
     setIsLoading(true);
-
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     let result;
     try {
@@ -56,9 +62,7 @@ function App() {
     else {
       result = "make a follow-up reply to the following: " + result;
     }
-
-
-
+    // prompt structure for "Follow-Up"
     let convo = [
       {
         role: "system",
@@ -70,6 +74,7 @@ function App() {
       }
     ]
 
+    // OpenAI call
     try {
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -83,18 +88,14 @@ function App() {
     }
   }
 
-    async function copyTextToClipboard() {
-        // console.log(new_result);
-      // new_result = await maintest(); 
-
-       navigator.clipboard.writeText(response).then(() => {
-        alert("Copied successfully"); 
-          //clipboard successfully set
-      }, () => {
-          //clipboard write failed, use fallback
-      });
+  // copy to clipboard 
+  async function copyTextToClipboard() {
+    navigator.clipboard.writeText(response).then(() => {
+      alert("Copied Successfully");
+    }, () => {
+      alert("Copy to Clipboard Failed");
+    });
   }
-
 
 
   return (
@@ -102,20 +103,6 @@ function App() {
       <Box sx={{ width: "100%", mt: 4 }}>
         <Grid container>
           <Grid item xs={12}>
-            {/* <TextField
-              fullWidth
-              autoFocus
-              label="Your text"
-              variant="outlined"
-              multiline
-              rows={4}
-              margin="normal"
-              value={prompt}
-              onChange={(e) => {
-                setPrompt(e.target.value);
-                chrome.storage.local.set({ prompt: e.target.value });
-              }}
-            /> */}
             <Button
               fullWidth
               disableElevation

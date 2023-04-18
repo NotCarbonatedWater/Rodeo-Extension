@@ -11,3 +11,5 @@ To update extension with new build:
 2. Open Chrome -> Extension -> Manage Extensions
 3. select Update OR reload button in packet box 
 
+Note: 
+- create .env and add OpenAI API key 
