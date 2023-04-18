@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Rodeo Reply Extension",
     "description": "Rodeo Reply Extension Project",
-    "version": "0.1",
+    "version": "0.1.1",
     "action": {
         "default_popup": "index.html",
         "default_title": "Open the popup"

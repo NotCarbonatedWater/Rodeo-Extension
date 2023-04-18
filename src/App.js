@@ -14,7 +14,7 @@ function App() {
   const [response, setResponse] = useState("");
 
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
 
 
@@ -51,12 +51,12 @@ function App() {
     if (result == "") {
       result = "create a simple and nice and 4 sentence message asking for an \
       update if they will be using Rodeo, do not explain what Rodeo is, do \
-      not say 'or not'."; 
+      not say 'or not'.";
     }
-    else{
-      result = "make a follow-up reply to the following: " + result; 
+    else {
+      result = "make a follow-up reply to the following: " + result;
     }
-    
+
 
 
     let convo = [
@@ -83,17 +83,17 @@ function App() {
     }
   }
 
-  //   async function copyTextToClipboard(text) {
-  //       // console.log(new_result);
-  //     // new_result = await maintest(); 
+    async function copyTextToClipboard() {
+        // console.log(new_result);
+      // new_result = await maintest(); 
 
-  //      navigator.clipboard.writeText(text).then(() => {
-  //       alert("Copied successfully"); 
-  //         //clipboard successfully set
-  //     }, () => {
-  //         //clipboard write failed, use fallback
-  //     });
-  // }
+       navigator.clipboard.writeText(response).then(() => {
+        alert("Copied successfully"); 
+          //clipboard successfully set
+      }, () => {
+          //clipboard write failed, use fallback
+      });
+  }
 
 
 
@@ -142,11 +142,37 @@ function App() {
             >
               Submit
             </Button>
+
           </Grid>
           <Grid item xs={12} sx={{ mt: 3 }}>
             <Paper sx={{ p: 3 }}>{response}</Paper>
           </Grid>
         </Grid>
+        <Button
+          disableElevation
+          variant="contained"
+          onClick={() => copyTextToClipboard()}
+          disabled={isLoading || response.length == 0}
+          startIcon={
+            isLoading && (
+              <AutorenewIcon
+                sx={{
+                  animation: "spin 2s linear infinite",
+                  "@keyframes spin": {
+                    "0%": {
+                      transform: "rotate(360deg)",
+                    },
+                    "100%": {
+                      transform: "rotate(0deg)",
+                    },
+                  },
+                }}
+              />
+            )
+          }
+        >
+          copy
+        </Button>
       </Box>
     </Container>
   );
