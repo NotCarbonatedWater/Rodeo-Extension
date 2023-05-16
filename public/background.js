@@ -20,7 +20,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
     });
     chrome.contextMenus.create({
-        id: "3",
+        id: "followUp",
         title: "Follow-up",
         contexts: ["selection"],
 
@@ -31,4 +31,17 @@ chrome.runtime.onInstalled.addListener(() => {
         contexts: ["selection"],
 
     });
-}); 
+
+});
+
+
+
+
+  // copy to clipboard 
+  async function copyTextToClipboard() {
+    navigator.clipboard.writeText(response).then(() => {
+      alert("Copied Successfully");
+    }, () => {
+      alert("Copy to Clipboard Failed");
+    });
+  }
